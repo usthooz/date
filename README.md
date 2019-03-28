@@ -25,7 +25,7 @@ Usage: odate <command>
 	v	查看当前版本号
 	help	查看帮助信息
 	now	输出当前时间信息
-	tran	时间戳抓换为时间格式
+	tran	时间戳转换为时间格式
 
  Options:
 	-ts	 时间戳转换为日期格式, 单位为秒(s)

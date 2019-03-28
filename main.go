@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -76,20 +77,44 @@ func initCommands() {
 
 // outNowTime 输出当前时间信息
 func outNowTime(name, detail string) {
-	tm := time.Now()
-	fmt.Printf("当前时间(CST): %v\n", tm)
-	fmt.Printf("当前时间戳(s): %d \n", tm.Unix())
-	fmt.Printf("当前时间戳(ms): %d \n", tm.UnixNano()/1e9)
-	fmt.Printf("当前时间戳(ns): %d \n", tm.UnixNano())
-	fmt.Printf("%v\n", tm.Format("2006-01-02 03:04:05"))
-	fmt.Printf("%v\n", tm.Format("2006-01-02 15:04:05"))
-	fmt.Printf("%v\n", tm.Format("2006/01/02 03:04:05"))
-	fmt.Printf("%v\n", tm.Format("2006/01/02 15:04:05"))
+	tmNow := time.Now()
+	fmt.Printf("当前时间戳: \n")
+	fmt.Printf("s: %d \n", tmNow.Unix())
+	fmt.Printf("ms: %d \n", tmNow.UnixNano()/1e9)
+	fmt.Printf("ns: %d \n", tmNow.UnixNano())
+	fmt.Printf("\n当前日期: \n")
+	fmt.Printf("CST: %v\n", tmNow)
+	fmt.Printf("%v\n", tmNow.Format("2006-01-02 03:04:05"))
+	fmt.Printf("%v\n", tmNow.Format("2006-01-02 15:04:05"))
+	fmt.Printf("%v\n", tmNow.Format("2006/01/02 03:04:05"))
+	fmt.Printf("%v\n", tmNow.Format("2006/01/02 15:04:05"))
 }
 
 // transform 时间以及时间戳相互转换
 func transform(name, detail string) {
-	fmt.Println(ts)
+	if len(ts) > 0 {
+		// 检查是否符合规范
+		tsI, err := strconv.ParseInt(ts, 10, 64)
+		if err != nil {
+			fmt.Println("输入的时间戳格式不合法，例：1553759492")
+		}
+		tsm := time.Unix(tsI, 0)
+		fmt.Printf("转换后日期: \n")
+		fmt.Printf("%v\n", tsm.Format("2006-01-02 03:04:05"))
+		fmt.Printf("%v\n", tsm.Format("2006-01-02 15:04:05"))
+		fmt.Printf("%v\n", tsm.Format("2006/01/02 03:04:05"))
+		fmt.Printf("%v\n", tsm.Format("2006/01/02 15:04:05"))
+	} else if len(tm) > 0 {
+		fmt.Printf("%v\n", tm)
+		tmm, err := time.Parse("2006/01/02 15:04:05", tm)
+		if err != nil {
+			fmt.Printf("输入日期格式不合法，例：2006/01/02 15:04:05")
+		}
+		fmt.Printf("转换后时间戳: \n")
+		fmt.Printf("s: %d \n", tmm.Unix())
+		fmt.Printf("ms: %d \n", tmm.UnixNano()/1e9)
+		fmt.Printf("ns: %d \n", tmm.UnixNano())
+	}
 }
 
 // getHelp get this project's help
@@ -100,7 +125,7 @@ func getHelp(name, detail string) {
 	}
 	outputHelp(fmt.Sprintf("Usage: %s <command>", exec), commands, []string{
 		"-ts\t 时间戳转换为日期格式, 单位为秒(s)",
-		"-tm\t 日期格式转换为时间戳, 格式如：2019/03/28 15:37:16",
+		"-tm\t 日期格式转换为时间戳, 格式如：2006/01/02 15:04:05",
 	}, []string{})
 }
 

@@ -17,6 +17,10 @@ const (
 var (
 	// command 命令
 	command string
+	// 时间戳
+	ts string
+	// 当前时间
+	tm string
 )
 
 var (
@@ -29,6 +33,11 @@ type Command struct {
 	Name   string
 	Detail string
 	Func   func(name, detail string)
+}
+
+func init() {
+	flag.StringVar(&ts, "ts", "", "需要转换的时间戳(s).")
+	flag.StringVar(&tm, "tm", "", "需要转换的时间.")
 }
 
 // initCommands
@@ -57,6 +66,11 @@ func initCommands() {
 			Detail: "输出当前时间信息",
 			Func:   outNowTime,
 		},
+		"tran": &Command{
+			Name:   "tran",
+			Detail: "时间戳抓换为时间格式",
+			Func:   transform,
+		},
 	}
 }
 
@@ -73,13 +87,21 @@ func outNowTime(name, detail string) {
 	fmt.Printf("%v\n", tm.Format("2006/01/02 15:04:05"))
 }
 
+// transform 时间以及时间戳相互转换
+func transform(name, detail string) {
+	fmt.Println(ts)
+}
+
 // getHelp get this project's help
 func getHelp(name, detail string) {
 	commands := make([]string, 0, len(commandMap))
 	for _, v := range commandMap {
 		commands = append(commands, fmt.Sprintf("%s\t%s", v.Name, v.Detail))
 	}
-	outputHelp(fmt.Sprintf("Usage: %s <command>", exec), commands, []string{}, []string{})
+	outputHelp(fmt.Sprintf("Usage: %s <command>", exec), commands, []string{
+		"-ts\t 时间戳转换为日期格式, 单位为秒(s)",
+		"-tm\t 日期格式转换为时间戳, 格式如：2019/03/28 15:37:16",
+	}, []string{})
 }
 
 func outputHelp(usage string, commands, options, examples []string) {

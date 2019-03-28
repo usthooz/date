@@ -62,8 +62,15 @@ func initCommands() {
 
 // outNowTime 输出当前时间信息
 func outNowTime(name, detail string) {
-	ts := time.Now().Unix()
-	fmt.Println(ts)
+	tm := time.Now()
+	fmt.Printf("当前时间(CST): %v\n", tm)
+	fmt.Printf("当前时间戳(s): %d \n", tm.Unix())
+	fmt.Printf("当前时间戳(ms): %d \n", tm.UnixNano()/1e9)
+	fmt.Printf("当前时间戳(ns): %d \n", tm.UnixNano())
+	fmt.Printf("%v\n", tm.Format("2006-01-02 03:04:05"))
+	fmt.Printf("%v\n", tm.Format("2006-01-02 15:04:05"))
+	fmt.Printf("%v\n", tm.Format("2006/01/02 03:04:05"))
+	fmt.Printf("%v\n", tm.Format("2006/01/02 15:04:05"))
 }
 
 // getHelp get this project's help

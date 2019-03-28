@@ -69,7 +69,7 @@ func initCommands() {
 		},
 		"tran": &Command{
 			Name:   "tran",
-			Detail: "时间戳抓换为时间格式",
+			Detail: "时间戳转换为时间格式",
 			Func:   transform,
 		},
 	}
@@ -126,7 +126,13 @@ func getHelp(name, detail string) {
 	outputHelp(fmt.Sprintf("Usage: %s <command>", exec), commands, []string{
 		"-ts\t 时间戳转换为日期格式, 单位为秒(s)",
 		"-tm\t 日期格式转换为时间戳, 格式如：2006/01/02 15:04:05",
-	}, []string{})
+	}, []string{
+		"odate",
+		"odate help",
+		"odate now",
+		"odate tran -ts=1553745472",
+		"odate tran -tm='2006/01/02 15:04:05'",
+	})
 }
 
 func outputHelp(usage string, commands, options, examples []string) {

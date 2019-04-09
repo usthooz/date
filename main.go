@@ -100,9 +100,9 @@ func transform(name, detail string) {
 		}
 		tsm := time.Unix(tsI, 0)
 		fmt.Printf("转换后日期: \n")
-		fmt.Printf("%v\n", tsm.Format("2006-01-02 03:04:05"))
+		fmt.Printf("%v\n", tsm.Format("2006-01-02 03:04:05 PM"))
 		fmt.Printf("%v\n", tsm.Format("2006-01-02 15:04:05"))
-		fmt.Printf("%v\n", tsm.Format("2006/01/02 03:04:05"))
+		fmt.Printf("%v\n", tsm.Format("2006/01/02 03:04:05 PM"))
 		fmt.Printf("%v\n", tsm.Format("2006/01/02 15:04:05"))
 	} else if len(tm) > 0 {
 		fmt.Printf("%v\n", tm)
